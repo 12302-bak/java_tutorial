@@ -1,0 +1,11 @@
+<script>
+var text = '{ "sites" : [' +
+	'{ "name":"Runoob" , "url":"www.runoob.com" },' +
+	'{ "name":"Google" , "url":"www.google.com" },' +
+	'{ "name":"Taobao" , "url":"www.taobao.com" } ]}';
+	
+//  1¡¢ obj = JSON.parse(text);
+//  2¡¢ obj = eval("(" + text +")");
+//  3¡¢ obj = (new Function("","return "+text))(); 
+document.getElementById("demo").innerHTML = obj.sites[2].name + " " + obj.sites[0].url;
+</script>
