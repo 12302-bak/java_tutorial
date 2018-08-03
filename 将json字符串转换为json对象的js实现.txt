@@ -1,15 +1,15 @@
 <script>
-var JSONObject= {"name":"²ËÄñ½Ì³Ì","url":"www.runoob.com", "slogan":"Ñ§µÄ²»½öÊÇ¼¼Êõ£¬¸üÊÇÃÎÏë£¡"};              //¶ÔÏó
+var JSONObject= {"name":"å¥½å¥½å­¦ä¹ ","url":"www.hhxx.com", "slogan":"äº‰å–è€ƒä¸Šä¸­å¤®æˆæ³•å­¦é™¢ï¼"};              //å¯¹è±¡
 	var strJSON = JSON.stringify(JSONObject);
 	var strToJSON1 = eval('('+ strJSON+')');
     var	strToJSON2 =JSON.parse(strJSON);
 	var strToJSON3 =(new Function("","return "+strJSON))(); 
-    alert(strJSON);   //×Ö·û´®
+    alert(strJSON);   //å­—ç¬¦ä¸²
 	alert(strToJSON1);  //object
 	alert(strToJSON2); //object
 	alert(strToJSON3); //object
 	
-	//ÈıÖÖ·½Ê½£¬»¹¿ÉÒÔÍ¨¹ıJSON.stringify£¨£©×ª»»»ØÀ´
+	//ä¸‰ç§æ–¹å¼ï¼Œè¿˜å¯ä»¥é€šè¿‡JSON.stringifyï¼ˆï¼‰è½¬æ¢å›æ¥
 	var strJSON1 = JSON.stringify(strToJSON1);
 	var strJSON2 = JSON.stringify(strToJSON2);
 	var strJSON3 = JSON.stringify(strToJSON3);
