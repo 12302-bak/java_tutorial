@@ -1,11 +1,19 @@
 <script>
-var text = '{ "sites" : [' +
-	'{ "name":"Runoob" , "url":"www.runoob.com" },' +
-	'{ "name":"Google" , "url":"www.google.com" },' +
-	'{ "name":"Taobao" , "url":"www.taobao.com" } ]}';
+var JSONObject= {"name":"菜鸟教程","url":"www.runoob.com", "slogan":"学的不仅是技术，更是梦想！"};              //对象
+	var strJSON = JSON.stringify(JSONObject);
+	var strToJSON1 = eval('('+ strJSON+')');
+    var	strToJSON2 =JSON.parse(strJSON);
+	var strToJSON3 =(new Function("","return "+strJSON))(); 
+    alert(strJSON);   //字符串
+	alert(strToJSON1);  //object
+	alert(strToJSON2); //object
+	alert(strToJSON3); //object
 	
-//  1、 obj = JSON.parse(text);
-//  2、 obj = eval("(" + text +")");
-//  3、 obj = (new Function("","return "+text))(); 
-document.getElementById("demo").innerHTML = obj.sites[2].name + " " + obj.sites[0].url;
+	//三种方式，还可以通过JSON.stringify（）转换回来
+	var strJSON1 = JSON.stringify(strToJSON1);
+	var strJSON2 = JSON.stringify(strToJSON2);
+	var strJSON3 = JSON.stringify(strToJSON3);
+	alert(strJSON1);
+	alert(strJSON2);
+	alert(strJSON3);
 </script>
