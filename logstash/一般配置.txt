@@ -1,0 +1,30 @@
+[#%&*^]22:13:21:536!应用程序:功能模块&com.anxinyiheng.service.applicationinfo.impl.GetSelectListInfoSvcImpl.getSelectListInfo(GetSelectListInfoSvcImpl.java:52)> INFO>get select list info begin systemCodeInfoBean : {,"codeType":"1","codeTypeBegin":"null","codeTypeEnd":"null"}
+
+
+input {
+	
+    file {
+        path => "/home/elk/systemInfoLog/*.txt"
+        type => "test"
+        start_position => "beginning"
+    }
+}
+
+filter {
+    grok {
+        match => {
+            "message" => "\[%{GREEDYDATA:prefix}\]%{TIME:time}!%{DATA:name}&%{JAVAFILE:method}\(%{DATA:value}\)\>\s%{LOGLEVEL:level}\>%{DATA:information}:\s%{GREEDYDATA:code}"
+        }
+    }
+   json {
+        source => "code"
+        target => "jsonCode"
+	remove_field =>"message"
+    }
+}
+
+output {
+        stdout{
+                 codec => rubydebug
+	} 
+}
