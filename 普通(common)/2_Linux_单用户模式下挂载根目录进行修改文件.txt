@@ -1,0 +1,27 @@
+利用安装光盘进入光盘系统或修复模式，将硬盘挂载上，想拷什么铐什么。
+
+
+单用户模式
+
+
+
+
+搞好了，最后是 selinux 的原因，不知道为啥，把 selinux disable 掉就进去了。
+做法是，先做一个从 usb 启动的 centos live cd, 从 usb 启动进去，先尝试用 fsck 修复了下，没效果，再把 /dev/mapper/centos-root mount 到一个新建的目录，进入目录 vi etc/selinux/config 把 enforcing 改为 disable， 重启。
+
+
+
+
+press 'e' key
+find the line 'linux16', find the first words 'ro ', and change with this "rw init=/sysroot/bin/bash "
+press ctrl+x to start linux
+
+修改相关系统文件：
+
+    进入单用户模式后，通常/分区（根分区）会以只读模式mount，故系统文件都是只读的，无法修改；
+
+    故需将根分区重新mount为可读写状态：
+
+    mount / -o rw,remount
+
+    然后修改系统文件（如/etc/fstab等），重启系统即可

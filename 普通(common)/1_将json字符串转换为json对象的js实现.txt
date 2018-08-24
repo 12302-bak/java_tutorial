@@ -1,0 +1,19 @@
+<script>
+var JSONObject= {"name":"好好学习","url":"www.hhxx.com", "slogan":"争取考上中央戏法学院！"};              //对象
+	var strJSON = JSON.stringify(JSONObject);
+	var strToJSON1 = eval('('+ strJSON+')');
+    var	strToJSON2 =JSON.parse(strJSON);
+	var strToJSON3 =(new Function("","return "+strJSON))(); 
+    alert(strJSON);   //字符串
+	alert(strToJSON1);  //object
+	alert(strToJSON2); //object
+	alert(strToJSON3); //object
+	
+	//三种方式，还可以通过JSON.stringify（）转换回来
+	var strJSON1 = JSON.stringify(strToJSON1);
+	var strJSON2 = JSON.stringify(strToJSON2);
+	var strJSON3 = JSON.stringify(strToJSON3);
+	alert(strJSON1);
+	alert(strJSON2);
+	alert(strJSON3);
+</script>
