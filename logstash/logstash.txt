@@ -1,0 +1,88 @@
+stdin{
+ }
+
+remove_field => ["@version"]
+
+
+filter {
+    grok {
+        match => ["message", "%{HTTPDATE:logdate}"]
+    }
+    date {
+        match => ["logdate", "dd/MMM/yyyy:HH:mm:ss Z"]
+    }
+    mutate {
+        convert => ["request_time", "float"]
+        split => ["message","|"]
+    }
+}
+
+
+
+[#%&*^]22:13:21:536!应用程序:功能模块&com.anxinyiheng.service.applicationinfo.impl.GetSelectListInfoSvcImpl.getSelectListInfo(GetSelectListInfoSvcImpl.java:52)> INFO>
+get select list info begin systemCodeInfoBean : {"codeType":"1","codeTypeBegin":"null","codeTypeEnd":"null"}
+
+notepad.exe
+
+
+input {
+       stdin{  }
+}
+output {
+        stdout{
+                 codec => rubydebug
+	}
+         exec{
+	command => "netstat -ano"   
+}
+}
+
+
+input
+    file {
+        path => "/home/elk/systemInfoLog/aaa.txt"
+        type => "test"
+        start_position => "beginning"
+    }
+}
+
+[#%&*^]22:13:21:536!应用程序:功能模块&com.anxinyiheng.service.applicationinfo.impl.GetSelectListInfoSvcImpl.getSelectListInfo(GetSelectListInfoSvcImpl.java:52)> INFO>get select list info begin systemCodeInfoBean : {,"codeType":"1","codeTypeBegin":"null","codeTypeEnd":"null"}
+
+
+\[%{GREEDYDATA:prefix}\]%{TIME:time}!%{DATA:name}&%{JAVAFILE:method}\(%{DATA:value}\)\>\s%{LOGLEVEL:level}\>%{DATA:information}:\s%{GREEDYDATA:code}
+
+
+input{
+	
+    file {
+        path => "/home/elk/systemInfoLog/aaa.txt"
+        type => "test"
+        start_position => "beginning"
+    }
+}
+
+filter {
+    grok {
+        match => {
+            "message" => "\[%{GREEDYDATA:prefix}\]%{TIME:time}!%{DATA:name}&%{JAVAFILE:method}\(%{DATA:value}\)\>\s%{LOGLEVEL:level}\>%{DATA:information}:\s%{GREEDYDATA:code}"
+        }
+    }
+   json {
+        source => "code"
+        target => "jsonCode"
+        remove_field =>"message"
+    }
+}
+
+output {
+        stdout{
+                 codec => rubydebug
+	} 
+}
+
+
+
+
+
+
+
