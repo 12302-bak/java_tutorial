@@ -1,3 +1,0 @@
-1，synchronized 这个关键字 锁住的是对象，不是代码段，(没有考虑不一样的方法)
-2，synchronized 如果是静态的，也就是没有使用（this），则使用的是全局所，效果和synchronized（类名.class）一样
-    （static synchronized方法，static方法可以直接类名加方法名调用，方法中无法使用this，所以它锁的不是this，而      是类的Class对象，所以，static synchronized方法也相当于全局锁，相当于锁住了代码段。）
