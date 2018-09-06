@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<!-- saved from url=(0014)about:internet -->
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="contactName=no">
+	<script src="http://unpkg.com/element-ui@2.4.5/lib/index.js"></script>
+	<link rel="stylesheet" href="http://unpkg.com/element-ui@2.4.5/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="css/element.css">
+    <link rel="stylesheet" href="css/body.css?id=1">
+  </head>
+  <body>
+    <div id="app" v-cloak style="height:100%;">
+      <el-container style="height:100%;width:100%;">
+        <el-header style="height:93px;">
+          <div class="logo" id="logo">
+            <img v-bind:src="logoUrl" />
+            <span>| {{systemName}}</span>
+            <div class="land2">
+              <span>{{currentTime}}</span>
+              <img src="image/tx.png">
+              <span >{{userName}}</span>
+              <a href="/SSO/GLO/Redirect" class="tc" @click="clearCookie()"><img src="image/tc.png"></a>
+            </div>
+          </div>
+          
+          
+          
+          <!--                 -----------------------------------                   -->
+          <div class="Nav">
+          
+           	<div id="app">
+				<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+				  <el-menu-item index="1">处理中心</el-menu-item>
+				  <el-submenu index="2">
+					<template slot="title">我的工作台</template>
+					<el-menu-item index="2-1">选项1</el-menu-item>
+					<el-menu-item index="2-2">选项2</el-menu-item>
+					<el-menu-item index="2-3">选项3</el-menu-item>
+				  </el-submenu>
+				  <el-menu-item index="3" disabled>消息中心</el-menu-item>
+				  <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
+				</el-menu>
+			</div>
+          </div>
+        </el-header> 
+        <el-main style="background-color:#f5f5f5;">
+          <iframe v-bind:src="menuFirstUrl" frameborder="0" id="main" name="main" width="100%"></iframe>
+        </el-main>
+      </el-container>
+    </div>
+  </body>
+  <!-- åå¼å¥ Vue -->
+  <script src="js/vue.js"></script>
+  <!-- å¼å¥ç»ä»¶åº -->
+  <script src="js/element.js"></script>
+  <script src="js/jquery-1.11.3.min.js"></script>
+  <script src="js/domain.js"></script>
+  <script>
+	
+
+
+  	new Vue({
+  		el : '#app',
+  		data : {
+        navReplace : 0,
+        roleMenuLJMenuList : [],
+        currentTime : '',
+        userName : '',
+  			systemName : '',
+  			logoUrl : '1',
+        menuFirstUrl : '',
+      },
+      
+      created:function(){
+        var url="index";
+        var _self=this;
+        $.ajax({
+          //è¯·æ±æ¹å¼ï¼get or post
+          type : 'post',
+          //è¯·æ±å°åï¼url
+          url : url,
+          //åæ­¥ï¼å¼æ­¥ï¼å¼æ­¥ä¸ºtrueï¼åæ­¥ä¸ºfalseï¼é»è®¤ä¸ºtrue
+          async : true,
+          //æ°æ®åæ°
+          data : '',
+          //è¦æ±ä¸ºStringç±»åçåæ°ï¼é¢ææå¡å¨è¿åçæ°æ®ç±»åãå¦æä¸æå®ï¼JQueryå°èªå¨æ ¹æ®httpåmimeä¿¡æ¯è¿åresponseXMLæresponseTextï¼å¹¶ä½ä¸ºåè°å½æ°åæ°ä¼ éã
+          dataType : '',
+          success : function(data) {
+            debugger;
+            var jsonData = eval("(" + data.obj +")");
+            document.title = jsonData.systemName;
+            _self.currentTime = jsonData.currentTime;
+            _self.userName = jsonData.userName;
+            _self.roleMenuLJMenuList = jsonData.roleMenuLJMenuList;
+            _self.systemName = jsonData.systemName;
+            _self.logoUrl = jsonData.logoUrl;
+            _self.menuFirstUrl = jsonData.menuFirstUrl+"?v="+Math.floor(Math.random()*100000);
+            //$("#app").load(location.href+" #app");
+           
+          },
+          error : function(XMLHttpRequest,textStatus, errorThrown) {
+            //ajaxå¤çå¤±è´¥æ¶åè°
+            _self.$confirm('  ', 'ç½ç»å¼å¸¸', {
+              confirmButtonText: 'ç¡®å®',
+              center:true,
+              type: 'error',
+              showCancelButton:false,
+            })
+          },
+          complete : function(XMLHttpRequest,
+              textStatus) {
+            //ajaxå¤çå®ææ¶åè°
+            this.loading = false;
+          }
+        });
+      },
+  		methods : {
+        nav : function(url,index) {
+        	this.navReplace = index;
+        	if(url!=''){
+        		this.$options.methods.delCookie("systemName");
+            this.$options.methods.delCookie("unitName");
+            this.$options.methods.delCookie("applicationCategoryOne");
+            this.$options.methods.delCookie("applicationCategoryTwe");
+            this.$options.methods.delCookie("regionalCenter");
+            this.$options.methods.delCookie("handleStatus");
+            this.$options.methods.delCookie("dataOrigin");
+            this.$options.methods.delCookie("distinguishResult");
+            this.$options.methods.delCookie("basicStatus");
+            this.$options.methods.delCookie("distinguishHandleStatus");
+            
+            this.$options.methods.delCookie("pageNo");
+            
+            this.$options.methods.delCookie("pageNoRectification");
+            this.$options.methods.delCookie("createdDateBeginRectification");
+            this.$options.methods.delCookie("createdDateEndRectification");
+            this.$options.methods.delCookie("systemNameRectification");
+            this.$options.methods.delCookie("threatStatusRectification");
+            this.$options.methods.delCookie("vulnerabilitiesHighestScoreRectification");
+            
+            this.$options.methods.delCookie("pageNoReview");
+            this.$options.methods.delCookie("createdDateBeginReview");
+            this.$options.methods.delCookie("createdDateEndReview");
+            this.$options.methods.delCookie("systemNameReview");
+            this.$options.methods.delCookie("threatStatusReview");
+        		main.location.href=url+"?v="+Math.floor(Math.random()*100000);
+        	}
+        },
+        delCookie: function(name,value){
+					var exp = new Date();
+					exp.setTime(exp.getTime() - 1);
+					//var cval=this.$options.methods.getCookie(name);
+					//if(cval!=null)
+					document.cookie= name + "="+value+";";
+				},
+  			land : function() {
+  				land2Show: true
+  				landShow: false
+  			},
+  			/* hoverMethod: function(id,type) {
+        	if(id=='0'&&type=='2'){
+        		$("#nav-box").css("height","41px");
+        	}else{
+        	alert($("#nav-box").height())
+        		$("#nav-box").css("height","auto");
+        		alert($("#nav-box").height())
+        	}
+        },  */
+  		}
+  	})
+  	$(document).ready(function() {
+  		//åå§åé«åº¦  
+  		$("#main").height($(window).height() - 100);
+  		
+  		//å½ææ¡£çªå£åçæ¹åæ¶ è§¦å
+  		$(window).resize(function() {
+  		
+  			$("#main").height($(window).height() - 100);
+  		});
+  		
+  		$(".Nav>div").hover(function(){
+  			$(this).css("height","auto")
+  		},function(){
+  			$(this).css("height","41px")
+  		})
+  	})
+  	var Main = {
+	    data() {
+	      return {
+	        activeIndex: '1',
+	        activeIndex2: '1'
+	      };
+	    },
+	    methods: {
+	        handleSelect(key, keyPath) {
+	        console.log(key, keyPath);
+	      }
+	    }
+	  }
+	var Ctor = Vue.extend(Main)
+	new Ctor().$mount('#app')
+  </script>
+</html>

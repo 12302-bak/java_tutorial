@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <title>echarts图标</title>
+
+    <script type="text/javascript" src="echarts.min.js"></script>
+	
+</head>
+<body>
+
+	<div id="pieEchart" style="width:900px;height:500px;"></div>
+</body>
+<!--
+<script>
+var option = {
+    color: ['#ff7f50', '#87cefa', '#da70d6', '#32cd32', '#6495ed', '#ff69b4',],   //��״ͼ��ɫ����
+    title: {
+        text: '',
+        text: '',
+        subtext: '',
+        x: 'center'
+    },
+    tooltip: {    //�������,��ʾ����
+        trigger: 'item',
+        formatter: function (p) {
+           console.log(p);  //ѡ���Լ�ϲ������ʾ
+            return str;
+        }
+    },
+    legend: {
+        show: false
+    },
+    series: [
+        {
+            name: '',
+            type: 'pie',   //��״ͼ
+            radius: '85%',   //��С
+            center: ['45%', '50%'],    //��ʾλ��
+            data: [],   //����,����ajax��ȡ
+
+        },
+        {
+            name: '',
+            type: 'pie',
+            radius: '85%',
+            center: ['45%', '50%'],
+            data: [],
+            itemStyle: {
+                normal: {
+                    label: {        //�˴�Ϊָʾ������
+                        show: true,
+                        position: 'inner', //��ǩ��λ��
+                        textStyle: {
+                            fontWeight: 200,
+                            fontSize: 10    //���ֵ������С
+                        },
+                        formatter: function (p) {   //ָʾ�߶�Ӧ����
+                            var data = p.data;
+                            return data;
+                        }
+                    },
+                    labelLine: {    //ָʾ��״̬
+                        show: true,
+                        smooth: 0.2,
+                        length: 10,
+                        length2: 20
+                    }
+                }
+            },
+        }
+    ]
+};
+var jsonData={"web©ɨ��Ϣ�����ҵ": 115,"����©ɨ��Ϣ�����ҵ": 111,"�����Ӧ�����ݵ���ҵ": 130,"������Բ�������ҵ": 115,"��ʶ���Ӧ�õ���ҵ": 146,"��վľ����Ϣ�����ҵ": 108}
+var myChart = echarts.init(document.getElementById('main'));
+                myChart.setOption({
+                    series: [
+                        {
+                            data: jsonData,  //�˴�������������Ϊ�ؼ���,�ٷֱȺ�ָʾ������Ϊ���ű�ͼ,������һ����ʾЧ��
+                        },
+                        {
+                            data: jsonData,
+                        }
+                    ]
+                });
+</script>
+-->
+<script>
+// 基于准备好的dom，初始化echarts实例
+        var pieEchart = echarts.init(document.getElementById('pieEchart'));
+
+         // 指定图表的配置项和数据
+         var pieoption = {  
+            title : {  
+                text: '公里总里程',   
+                x:'left',
+                textStyle:{
+                    color:'#FFFFFF',
+                    fontSize:25
+                }
+            },  
+            tooltip : {  
+                trigger: 'item',  
+                formatter: "{a} <br/>{b} : {c} KM"  
+            },  
+            legend: {  
+                orient : 'vertical',  
+                x : 'left',  
+                top:40,
+                itemWidth:70,
+                itemHeight:30,
+                formatter: '{name}',
+                textStyle:{
+                    color: '#FFFFFF'
+                },
+                data:[{name:'高速50KM',icon:'rect'},{name:'一级150KM',icon:'rect'},{name:'二级150KM',icon:'rect'},{name:'三级100KM',icon:'rect'},{name:'四级50KM',icon:'rect'}]  }
+                ,   
+            calculable : true,  
+            series : [  
+                {  
+                    name:'公里总里程',  
+                    type:'pie',  
+                    radius : '70%',//饼图的半径大小  
+                    center: ['60%', '60%'],//饼图的位置 
+                    label:{            //饼图图形上的文本标签
+                            normal:{
+                                show:true,
+                                position:'inner', //标签的位置
+                                textStyle : {
+                                    fontWeight : 300 ,
+                                    fontSize : 16    //文字的字体大小
+                                },
+                                formatter:'{d}%'
+
+                                
+                            }
+                        },
+                    data:[  
+                        {value:50,name:'高速50KM',itemStyle:{normal:{color:'#FE0000'}}},  
+                        {value:150,name:'一级150KM',itemStyle:{normal:{color:'#F29700'}}},  
+                        {value:150,name:'二级150KM',itemStyle:{normal:{color:'#02B0ED'}}}, 
+                        {value:100,name:'三级100KM',itemStyle:{normal:{color:'#55E87D'}}},
+                        {value:50,name:'四级50KM',itemStyle:{normal:{color:'#FFE200'}}},
+                    ]
+                }  
+            ]  
+        };
+
+            // 使用刚指定的配置项和数据显示图表。
+            pieEchart.setOption(pieoption);
+</script>
+</html>
