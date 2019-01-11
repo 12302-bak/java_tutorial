@@ -1,0 +1,31 @@
+<!-- 第1种方式1 -->
+<mvc:interceptors>
+	<!-- 关于拦截器的配置问题 ,可以通过<mvc:interceptor>来配置使用哪个拦截器来【不】拦截的路径 -->
+	<mvc:interceptor>
+	
+		<mvc:mapping path="/*"/> <!-- 必须有拦截路径，才能配置不拦截的 -->
+		<mvc:exclude-mapping path="/user/check"/>
+		<!-- 指定使用哪个拦截器进行拦截 -->
+		<bean class="com.elizabeth.interceptor.LoginInterceptor"></bean>
+		
+	</mvc:interceptor>
+</mvc:interceptors>
+
+<!-- 第2种方式 -->
+
+<mvc:interceptors>
+	<!--配置拦截器 拦截除了exceptUrls内的所有请求-->
+	<mvc:interceptor>
+		<mvc:mapping path="/**"/>
+		<!--在拦截器中注入exceptUrls，获取后放行 --> 
+		<bean class="common.interceptor.LoginInterceptor">
+			<property name="exceptUrls">
+				<list>
+					<value>/user/login</value>
+					<value>/user/register</value>
+				</list>
+			</property>
+		</bean>
+	</mvc:interceptor>
+</mvc:interceptors>
+
